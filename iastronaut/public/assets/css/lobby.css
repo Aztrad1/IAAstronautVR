@@ -1,0 +1,93 @@
+/* ════════════════════════════════════════════
+   IA Astronaut VR — lobby.css
+════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+html, body {
+  width:100%; height:100%; overflow:hidden; background:#000;
+  font-family:'Courier New',Courier,monospace;
+}
+
+#lobbyCanvas { display:block; width:100%; height:100%; touch-action:none; }
+
+/* ── HUD ─────────────────────────────────── */
+#lobbyHUD { position:fixed; inset:0; pointer-events:none; z-index:10; }
+
+#lobbyTitle {
+  position:absolute; top:18px; left:50%; transform:translateX(-50%);
+  text-align:center; pointer-events:none;
+}
+#lobbyTitle .eyebrow {
+  font-size:10px; letter-spacing:5px; color:rgba(0,220,255,0.55);
+  text-transform:uppercase; margin-bottom:5px;
+}
+#lobbyTitle .main-title {
+  font-size:22px; font-weight:700; color:#fff;
+  letter-spacing:4px; text-transform:uppercase;
+}
+#lobbyTitle .main-title span { color:#00e5ff; }
+#lobbyTitle .subtitle {
+  font-size:11px; color:rgba(255,255,255,0.25);
+  margin-top:4px; letter-spacing:1px;
+}
+
+/* Hover del planeta */
+#planetHoverLabel {
+  position:absolute; bottom:140px; left:50%; transform:translateX(-50%);
+  text-align:center; opacity:0; transition:opacity .2s; pointer-events:none;
+}
+#planetHoverLabel.visible { opacity:1; }
+#planetHoverLabel .p-name {
+  font-size:18px; font-weight:700; color:#fff;
+  letter-spacing:3px; text-transform:uppercase;
+}
+#planetHoverLabel .p-desc { font-size:11px; color:rgba(0,230,255,0.7); margin-top:3px; }
+
+/* Hint */
+#lobbyHint {
+  position:absolute; bottom:96px; left:50%; transform:translateX(-50%);
+  font-size:10px; color:rgba(255,255,255,0.18);
+  letter-spacing:2px; text-transform:uppercase;
+  pointer-events:none; white-space:nowrap;
+  z-index:20;
+}
+
+/* ── Responsive (celular) ──────────────────
+   El resto del HUD ya es liviano (textos cortos, sin imágenes), así que
+   alcanza con achicar tipografías y dejar que el hint (el texto más largo,
+   varía según el planeta) pueda partirse en más de una línea en vez de
+   desbordar el ancho de la pantalla. */
+@media (max-width: 720px) {
+  #lobbyTitle .eyebrow    { font-size:8px; letter-spacing:3px; }
+  #lobbyTitle .main-title { font-size:17px; letter-spacing:2px; }
+  #lobbyTitle .subtitle   { font-size:9px; }
+
+  #planetHoverLabel { bottom:120px; max-width:88vw; }
+  #planetHoverLabel .p-name { font-size:15px; }
+  #planetHoverLabel .p-desc { font-size:10px; }
+
+  #lobbyHint {
+    bottom:80px;
+    white-space:normal;
+    max-width:86vw;
+    text-align:center;
+    font-size:9px;
+    line-height:1.5;
+  }
+}
+
+/* ── Overlay (solo para warp) ────────────── */
+#launchOverlay {
+  position:fixed; inset:0; z-index:95;
+  pointer-events:none;
+  /* El warpCanvas va encima con z-index:99 */
+}
+#launchOverlay.active { pointer-events:auto; }
+
+/* El VRButton de Three.js se reposiciona arriba a la izquierda para que no
+   quede tapado por #lobbyHint. */
+#VRButton {
+  top: 18px !important;
+  bottom: auto !important;
+  left: 14px !important;
+  z-index: 40 !important;
+}

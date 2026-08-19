@@ -1,0 +1,140 @@
+/* ════════════════════════════════════════════════
+   IA Astronaut VR — vr.css
+   Estilos del visor de casco (helmetHUD) que se superpone al canvas.
+   El reset de html/body/canvas ya lo trae lobby.css (esta hoja se carga
+   junto a esa, no sola) — repetirlo acá solo lograba pisarle la fuente.
+════════════════════════════════════════════════ */
+
+/* ════════════════════════════════════════════════
+   HELMET HUD — visor de casco de astronauta
+   Puramente decorativo/informativo, no bloquea clics
+════════════════════════════════════════════════ */
+#helmetHUD {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  pointer-events: none;
+  font-family: 'Consolas', 'SFMono-Regular', Menlo, monospace;
+}
+
+/* Viñeta curva que simula el borde interior del visor */
+#helmetHUD .visor-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 85% 78% at 50% 48%, rgba(0,0,0,0) 62%, rgba(3,10,20,0.55) 92%, rgba(2,7,14,0.92) 100%);
+}
+
+/* Reflejo sutil de vidrio, diagonal */
+#helmetHUD .visor-glare {
+  position: absolute;
+  top: -10%; left: -20%;
+  width: 70%; height: 55%;
+  background: linear-gradient(115deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.03) 35%, rgba(255,255,255,0) 55%);
+  transform: rotate(-6deg);
+}
+
+/* Arco superior del casco */
+#helmetHUD .visor-top {
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: min(1100px, 96%);
+  height: 130px;
+}
+#helmetHUD .visor-top svg { width: 100%; height: 100%; display: block; }
+
+/* Guardas inferiores (mejillas del casco) */
+#helmetHUD .visor-chin-l, #helmetHUD .visor-chin-r {
+  position: absolute;
+  bottom: -40px;
+  width: 260px; height: 200px;
+  opacity: 0.9;
+}
+#helmetHUD .visor-chin-l { left: -60px; }
+#helmetHUD .visor-chin-r { right: -60px; transform: scaleX(-1); }
+#helmetHUD .visor-chin-l svg, #helmetHUD .visor-chin-r svg { width: 100%; height: 100%; }
+
+/* Panel de lectura: oxígeno (inferior izquierda) */
+#helmetHUD .hud-readout {
+  position: absolute;
+  bottom: 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 150px;
+  color: #7fe8ff;
+  text-shadow: 0 0 8px rgba(0,220,255,0.55);
+}
+#helmetHUD .hud-readout.left  { left: 34px; }
+#helmetHUD .hud-readout.right { right: 34px; align-items: flex-end; text-align: right; }
+
+.hud-readout .r-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  opacity: 0.75;
+  text-transform: uppercase;
+}
+.hud-readout .r-value {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.hud-readout .r-bar {
+  width: 130px;
+  height: 5px;
+  border: 1px solid rgba(127,232,255,0.45);
+  background: rgba(0,20,30,0.5);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.hud-readout .r-bar > i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg,#00e5ff,#7fffd4);
+  box-shadow: 0 0 6px rgba(0,229,255,0.7);
+  transition: width 0.6s ease;
+}
+.hud-readout.warn .r-value  { color: #ffb020; text-shadow:0 0 8px rgba(255,176,32,0.6); }
+.hud-readout.warn .r-bar > i{ background: linear-gradient(90deg,#ff8a00,#ffcf5c); }
+
+/* Esquinas superiores: brackets técnicos */
+#helmetHUD .hud-corner {
+  position: absolute;
+  top: 18px;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: rgba(127,232,255,0.85);
+  text-shadow: 0 0 6px rgba(0,220,255,0.4);
+  display:flex; flex-direction:column; gap:2px;
+}
+#helmetHUD .hud-corner.left  { left: 26px; }
+#helmetHUD .hud-corner.right { right: 26px; text-align: right; }
+.hud-corner b { color:#e8fbff; font-size:12px; letter-spacing:1px; }
+
+/* Mira / brújula central inferior */
+#helmetHUD .hud-compass {
+  position: absolute;
+  bottom: 20px; left: 50%;
+  transform: translateX(-50%);
+  width: 70px; height: 70px;
+  border: 1px solid rgba(127,232,255,0.4);
+  border-radius: 50%;
+  display:flex; align-items:center; justify-content:center;
+  color: rgba(127,232,255,0.85);
+  font-size: 10px;
+  background: radial-gradient(circle, rgba(0,30,45,0.35), rgba(0,10,18,0.15));
+}
+#helmetHUD .hud-compass::before {
+  content:'';
+  position:absolute; inset:10px;
+  border:1px dashed rgba(127,232,255,0.3);
+  border-radius:50%;
+}
+
+@media (max-width: 720px) {
+  #helmetHUD .visor-chin-l, #helmetHUD .visor-chin-r { width: 170px; height: 140px; bottom: -30px; }
+  #helmetHUD .hud-readout { min-width: 110px; }
+  #helmetHUD .hud-readout .r-bar { width: 96px; }
+  #helmetHUD .hud-compass { display:none; }
+}

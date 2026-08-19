@@ -1,0 +1,15 @@
+<Files ".env">
+  Require all denied
+</Files>
+
+# Los módulos JS que se importan entre sí (chat.js, uiPanel.js, etc.) no
+# pasan por el helper asset() que le agrega ?v=<fecha> al script principal
+# — un import de JavaScript es solo una ruta fija, no se le puede agregar
+# ese parámetro. Sin esto, el navegador podía seguir sirviendo una copia
+# vieja de esos archivos de su caché aunque el archivo ya hubiera cambiado
+# en el servidor. Esto obliga a que siempre pregunte primero si cambió.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>

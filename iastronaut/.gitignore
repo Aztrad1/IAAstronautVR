@@ -1,0 +1,11 @@
+# Clave de API real — nunca debe subirse al repositorio.
+.env
+
+# Archivos que genera el sistema operativo, no son parte del proyecto.
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Carpetas de configuración de editores (opcional, cada quien tiene la suya).
+.vscode/
+.idea/
